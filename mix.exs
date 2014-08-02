@@ -6,6 +6,7 @@ defmodule YahooFx.Mixfile do
      version: "0.1.0",
      elixir: "~> 0.14.3",
      package: package,
+     description: description,
      deps: deps]
   end
 
@@ -24,5 +25,11 @@ defmodule YahooFx.Mixfile do
     %{ licenses: ["MIT"],
        contributors: ["Lau Taarnskov"],
        links: %{ "GitHub" => "https://github.com/lau/yahoo_fx" } }
+  end
+
+  defp description do
+    """
+    YahooFx is an Elixir library for getting currency exchange rates from Yahoo Finance
+    """
   end
 end
