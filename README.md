@@ -17,9 +17,9 @@ Yahoo makes currency rates publicly available. This Elixir library provides a Fl
       ]
     end
 
-Run ´mix deps.get´ to install the dependencies.
+Run `mix deps.get` to install the dependencies.
 
-### 2) Add httpotion to applications in the mix.exs file of the app
+### 2) Add httpotion to applications in mix.exs
 
     def application do
       [applications: [:httpotion]]
