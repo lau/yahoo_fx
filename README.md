@@ -35,7 +35,7 @@ You can now make calls like this in your app:
 
 Get the current exchange rate between Euro and US Dollar
 
-    iex> YahooFx.data_for_pair("EUR","USD")
+    iex> YahooFx.rate("EUR","USD")
     %{date: "8/1/2014", rate: 1.3429, text: "EUR to USD", time: "5:33pm"}
 
     iex> YahooFx.rate(:usd, :dkk)[:rate]
