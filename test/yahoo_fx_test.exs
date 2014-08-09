@@ -13,10 +13,10 @@ defmodule YahooFxTest do
 
   test "converting types" do
     map_with_strings = %{"date" => "8/1/2014", "rate" => "4.2072", "text" => "DKK to UYU", "time" => "2:52pm"}
-    assert YahooFx.convert_types(map_with_strings) == %{date: "8/1/2014", rate: 4.2072, text: "DKK to UYU", time: "2:52pm"}
+    assert YahooFx.convert_types(map_with_strings) == %{datetime: {{2014,8,1}, {14,52,0}}, rate: 4.2072, text: "DKK to UYU"}
   end
 
-  #test "fetching from yahoo" do
-  #  assert elem(YahooFx.fetch("USD", "UYU"), 0) == :ok
-  #end
+  #  test "fetching from yahoo" do
+  #    assert elem(YahooFx.fetch("USD", "UYU"), 0) == :ok
+  #  end
 end

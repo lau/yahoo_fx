@@ -1,28 +1,27 @@
 defmodule YahooFx do
-  alias HTTPotion.Response
-
-  @user_agent ["User-agent": "Elixir FTW"]
-
   def url_for_currency_pair(first, second) do
     "http://download.finance.yahoo.com/d/quotes.csv?s=#{first}#{second}=X&f=nl1d1t1"
   end
 
   def fetch(first, second) do
-    response = HTTPotion.get(url_for_currency_pair(first, second), @user_agent)
-    return_code = if Response.success?(response), do: :ok, else: :error
-    { return_code, response.body }
+    url_for_currency_pair(first, second)
+    |> HTTPoison.get
+    |> handle_fetch_response
   end
 
-  def parse_fetched(fetched) do
-    body = elem(fetched, 1)
-    Regex.named_captures(~r/\"(?<text>[^\"]+)\"\,(?<rate>[0-9\.]+)\,\"(?<date>[^\"]+)\"\,\"(?<time>[^\"]+)\"/, body)
+  def handle_fetch_response(%{status_code: 200, body: body}) do {:ok, body} end
+  def handle_fetch_response(%{status_code: ___, body: body}) do {:error, body} end
+
+  def parse_fetched({:ok, body}) do
+    Regex.named_captures(~r{\"(?<text>[^\"]+)\"\,(?<rate>[0-9\.]+)\,\"(?<date>[^\"]+)\"\,\"(?<time>[^\"]+)\"}, body)
   end
 
   def convert_types(map_with_strings) do
-    %{:date => map_with_strings["date"],
+    %{:datetime => {TimeSeer.date(map_with_strings["date"], :mmddyyyy),
+                    TimeSeer.time(map_with_strings["time"])},
       :rate => elem(Float.parse(map_with_strings["rate"]), 0),
       :text => map_with_strings["text"],
-      :time => map_with_strings["time"]}
+      }
   end
 
   @doc """
@@ -30,8 +29,8 @@ defmodule YahooFx do
 
   ## Example
 
-      iex> YahooFx.data_for_pair("EUR","USD")
-      %{date: "8/1/2014", rate: 1.3429, text: "EUR to USD", time: "5:33pm"}
+      iex> YahooFx.rate("EUR","USD")
+      %{datetime: {{2014, 8, 1}, {17, 33, 0}}, rate: 1.3429, text: "EUR to USD"}
 
   """
   def rate(first, second) do
