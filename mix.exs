@@ -3,7 +3,7 @@ defmodule YahooFx.Mixfile do
 
   def project do
     [app: :yahoo_fx,
-     version: "0.1.1",
+     version: "0.1.2",
      elixir: "~> 0.15.0",
      package: package,
      description: description,
@@ -17,8 +17,8 @@ defmodule YahooFx.Mixfile do
   defp deps do
     [
       {:httpoison, "~> 0.3.2" },
-      {:hackney, github: "benoitc/hackney", tag: "0.13.0" },
-      {:time_seer, "~> 0.0.1" }
+      {:hackney, "~> 0.13.1" },
+      {:time_seer, "~> 0.0.4" }
     ]
   end
 
