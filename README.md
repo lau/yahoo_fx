@@ -12,8 +12,8 @@ Yahoo makes currency rates publicly available. This Elixir library provides a Fl
 
     defp deps do
       [
-        {:yahoo_fx, "~> 0.1.3"},
-        {:hackney, "0.13.1"},
+        {:yahoo_fx, "~> 0.2.0"},
+        {:hackney, "~> 1.4"},
       ]
     end
 

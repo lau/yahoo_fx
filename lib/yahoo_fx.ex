@@ -9,8 +9,8 @@ defmodule YahooFx do
     |> handle_fetch_response
   end
 
-  def handle_fetch_response(%{status_code: 200, body: body}) do {:ok, body} end
-  def handle_fetch_response(%{status_code: ___, body: body}) do {:error, body} end
+  def handle_fetch_response({:ok, %{status_code: 200, body: body}}) do {:ok, body} end
+  def handle_fetch_response({_,   %{status_code: ___, body: body}}) do {:error, body} end
 
   def parse_fetched({:ok, body}) do
     Regex.named_captures(~r{\"(?<text>[^\"]+)\"\,(?<rate>[0-9\.]+)\,\"(?<date>[^\"]+)\"\,\"(?<time>[^\"]+)\"}, body)
